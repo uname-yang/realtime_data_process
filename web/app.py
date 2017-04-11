@@ -17,17 +17,17 @@ status_success = {
 db = redis.Redis(host='redis',port=6379,db=0)
 
 class Index(tornado.web.RequestHandler):
-	def get(self):
-		self.render('index.html')
+    def get(self):
+        self.render('index.html',python=db.get('python'),ruby=db.get('ruby'),haskell=db.get('haskell'))
 
 class Status(tornado.web.RequestHandler):
     def get(self,tag):
         count=db.get(tag)
-        print "OK:"+count
+        self.write(json.dumps(count))
 
 class Mess(tornado.web.RequestHandler):
-	def post(self):
-		tar = self.get_argument('url')
+    def post(self):
+        tar = self.get_argument('url')
         self.write(json.dumps(status_success))
 
 if __name__ == '__main__':
