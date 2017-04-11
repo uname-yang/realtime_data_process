@@ -28,7 +28,7 @@ class Index(tornado.web.RequestHandler):
         }])
 
 class LangModule(tornado.web.UIModule):
-	def render(self, book):
+	def render(self, lang):
 		return self.render_string(
 			"modules/lang.html",
 			lang=lang,
