@@ -31,9 +31,12 @@ producer = KafkaProducer(bootstrap_servers=[KAFKA_ENV_KAFKA_HOST_NAME])
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
-        print ("message sent to Kafka")
         print (str(data))
         future = producer.send(KAFKA_TOPIC_NAME, str(data))
+        record_metadata = future.get(timeout=10)
+        print (record_metadata.topic)
+        print (record_metadata.partition)
+        print (record_metadata.offset)
         return True
 
     def on_error(self,status):

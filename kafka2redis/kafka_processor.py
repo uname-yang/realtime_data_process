@@ -2,12 +2,12 @@
 import threading, logging, time
 import os
 from kafka import KafkaConsumer, KafkaProducer
+import json
+import redis
 
 # Kafka Configurations
 KAFKA_HOST_NAME = os.environ.get('KAFKA_HOST_NAME')
 KAFKA_TOPIC_NAME = os.environ.get('KAFKA_TOPIC_NAME')
-
-
 
 class Consumer(threading.Thread):
     daemon = True
@@ -15,9 +15,14 @@ class Consumer(threading.Thread):
     def run(self):
         consumer = KafkaConsumer(KAFKA_TOPIC_NAME,bootstrap_servers=[KAFKA_HOST_NAME])
         consumer.subscribe([KAFKA_TOPIC_NAME])
+        db = redis.Redis(host='redis',port=6379,db=0)
 
         for message in consumer:
-            print (message)
+            tweets=json.loads(message.value)
+            print (tweets)
+            for tag in tweets['entities']['hashtags']:
+                db.incr(tag['text'])
+
 
 
 def main():

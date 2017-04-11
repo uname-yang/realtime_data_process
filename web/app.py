@@ -5,6 +5,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import json
+import redis
 
 
 from tornado.options import define, options
