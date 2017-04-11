@@ -10,6 +10,7 @@ kafka:
   environment:
     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     KAFKA_CREATE_TOPICS: "tweets:2:1"
+    KAFKA_HEAP_OPTS: "-Xmx256M -Xms128M"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
 
@@ -37,6 +38,15 @@ twitterkafkaproducer:
   links:
     - kafka
 
+worker:
+  build: kafka2redis
+  restart: always
+  environment:
+    KAFKA_TOPIC_NAME: "tweets"
+  links:
+    - kafka
+
+
 # webserver:
 #   build: web
 #   restart: always
@@ -47,14 +57,3 @@ twitterkafkaproducer:
 #   ports:
 #     - "80:5000"
 #
-# worker:
-#   image: rogaha/spark-job
-#   restart: always
-#   command: /spark-job/start.sh
-#   hostname: spark-job
-#   environment:
-#     SPARK_CONF_DIR: /conf
-#     KAFKA_TOPIC_NAME: "tweets"
-#   links:
-#     - kafka
-#     - cassandra
