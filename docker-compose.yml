@@ -1,0 +1,60 @@
+zookeeper:
+  image: wurstmeister/zookeeper
+  ports:
+    - "2181:2181"
+
+kafka:
+  image: wurstmeister/kafka
+  ports:
+    - "9092:9092"
+  environment:
+    KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    KAFKA_CREATE_TOPICS: "tweets:2:1"
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+cassandra:
+  image: cassandra:latest
+  hostname: cassandra
+  ports:
+    - "9042:9042"
+
+redis:
+  image: redis:latest
+  hostname: redis
+
+twitterkafkaproducer:
+  build: kafka_p
+  restart: always
+  hostname: twitterkafkaproducer
+  environment:
+    ACCESS_TOKEN: "851652975957127168-kCdHaLXCHAf3yBzynoKc62jG7fxI71O"
+    ACCESS_TOKEN_SECRET: "iV330tl5xRtN960uXHHyImcTwBlt5CYSqwb7EH4EJcCWy"
+    CONSUMER_KEY: "PRUgkvxvKCAvfT6cnoG8ZueMg"
+    CONSUMER_SECRET: "WwtS8oKDT3H7dqQxNdQ7idUk5gMYX1ZeWXDA199QOHKLWIQhoQ"
+    KAFKA_TOPIC_NAME: "tweets"
+    KEYWORDS_LIST: "python,perl,scala,ruby,javascript"
+  links:
+    - kafka
+
+# webserver:
+#   build: web
+#   restart: always
+#   command: /start.sh
+#   hostname: webserver
+#   links:
+#     - cassandra
+#   ports:
+#     - "80:5000"
+#
+# worker:
+#   image: rogaha/spark-job
+#   restart: always
+#   command: /spark-job/start.sh
+#   hostname: spark-job
+#   environment:
+#     SPARK_CONF_DIR: /conf
+#     KAFKA_TOPIC_NAME: "tweets"
+#   links:
+#     - kafka
+#     - cassandra
