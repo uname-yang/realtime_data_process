@@ -13,6 +13,8 @@ kafka:
     KAFKA_HEAP_OPTS: "-Xmx256M -Xms128M"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+  links:
+    - zookeeper
 
 cassandra:
   image: cassandra:latest
@@ -24,7 +26,7 @@ redis:
   image: redis:latest
   hostname: redis
 
-twitterkafkaproducer:
+tweets:
   build: kafka_producer
   restart: always
   hostname: twitterkafkaproducer
@@ -46,14 +48,19 @@ worker:
   links:
     - kafka
 
+keeper:
+  build: kafka2cassandra
+  restart: always
+  environment:
+    KAFKA_TOPIC_NAME: "tweets"
+  links:
+    - kafka
 
-# webserver:
-#   build: web
-#   restart: always
-#   command: /start.sh
-#   hostname: webserver
-#   links:
-#     - cassandra
-#   ports:
-#     - "80:5000"
-#
+webserver:
+  build: web
+  restart: always
+  hostname: webserver
+  links:
+    - redis
+  ports:
+    - "80:5000"

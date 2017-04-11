@@ -12,4 +12,4 @@ RUN pip install redis
 ADD ./kafka_processor.py /
 
 # Start the Kafka producer process
-CMD ["/usr/bin/python","/kafka_processor.py"]
+CMD ["python","/kafka_processor.py"]

@@ -12,4 +12,4 @@ RUN pip install tweepy
 ADD ./twitter_kafka_producer.py /
 
 # Start the Kafka producer process
-CMD ["/usr/bin/python","/twitter_kafka_producer.py"]
+CMD ["python","/twitter_kafka_producer.py"]
