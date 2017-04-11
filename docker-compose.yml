@@ -24,7 +24,7 @@ redis:
   hostname: redis
 
 twitterkafkaproducer:
-  build: kafka_p
+  build: kafka_producer
   restart: always
   hostname: twitterkafkaproducer
   environment:
