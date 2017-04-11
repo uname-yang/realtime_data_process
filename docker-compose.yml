@@ -37,7 +37,7 @@ tweets:
     CONSUMER_SECRET: "WwtS8oKDT3H7dqQxNdQ7idUk5gMYX1ZeWXDA199QOHKLWIQhoQ"
     KAFKA_TOPIC_NAME: "tweets"
     KEYWORDS_LIST: "python,perl,scala,ruby,javascript"
-    KAFKA_HOST_NAME: kafka:9092
+    KAFKA_HOST_NAME: "kafka:9092"
   links:
     - kafka
 
@@ -46,6 +46,7 @@ worker:
   restart: always
   environment:
     KAFKA_TOPIC_NAME: "tweets"
+    KAFKA_HOST_NAME: "kafka:9092"
   links:
     - kafka
 

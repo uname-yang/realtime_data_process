@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import threading, logging, time
-
+import os
 from kafka import KafkaConsumer, KafkaProducer
 
 # Kafka Configurations
-KAFKA_ENV_KAFKA_HOST_NAME = 'kafka'
+KAFKA_ENV_KAFKA_HOST_NAME = os.environ.get('KAFKA_HOST_NAME')
 KAFKA_TOPIC_NAME = os.environ.get('KAFKA_TOPIC_NAME')
 
 
@@ -13,8 +13,7 @@ class Consumer(threading.Thread):
     daemon = True
 
     def run(self):
-        consumer = KafkaConsumer(KAFKA_TOPIC_NAME,
-                         bootstrap_servers=[KAFKA_ENV_KAFKA_HOST_NAME+":9092"])
+        consumer = KafkaConsumer(KAFKA_TOPIC_NAME,bootstrap_servers=[KAFKA_HOST_NAME])
         consumer.subscribe([KAFKA_TOPIC_NAME])
 
         for message in consumer:
