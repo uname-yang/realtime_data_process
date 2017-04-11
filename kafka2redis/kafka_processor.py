@@ -19,8 +19,9 @@ class Consumer(threading.Thread):
 
         for message in consumer:
             tweets=json.loads(message.value)
-            print (tweets)
+            #print (tweets)
             for tag in tweets['entities']['hashtags']:
+                print (tag['text'])
                 db.incr(tag['text'])
 
 

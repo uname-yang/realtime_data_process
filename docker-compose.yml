@@ -59,11 +59,11 @@ worker:
 #   links:
 #     - kafka
 #
-# webserver:
-#   build: web
-#   restart: always
-#   hostname: webserver
-#   links:
-#     - redis
-#   ports:
-#     - "80:5000"
+webserver:
+  build: web
+  restart: always
+  hostname: webserver
+  links:
+    - redis
+  ports:
+    - "80:5000"

@@ -21,7 +21,7 @@ class Index(tornado.web.RequestHandler):
 
 class Status(tornado.web.RequestHandler):
     def get(self):
-        count=self.application.db.get("python:totals")
+        count=self.application.db.get("python")
         print "OK:"+count
 
 class Mess(tornado.web.RequestHandler):
