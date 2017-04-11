@@ -14,6 +14,7 @@ define("port", default=5000, help="run on the given port", type=int)
 status_success = {
         "status": True
         }
+db = redis.Redis(host='redis',port=6379,db=0)
 
 class Index(tornado.web.RequestHandler):
 	def get(self):
@@ -21,7 +22,7 @@ class Index(tornado.web.RequestHandler):
 
 class Status(tornado.web.RequestHandler):
     def get(self):
-        count=self.application.db.get("python")
+        count=db.get("python")
         print "OK:"+count
 
 class Mess(tornado.web.RequestHandler):
@@ -36,7 +37,6 @@ if __name__ == '__main__':
 		handlers=[(r'/', Index),(r'/tweets/(.*)', Mess),(r'/status/(.*)',Status)],
 		template_path=os.path.join(os.path.dirname(__file__), "tpl"),
         static_path=os.path.join(os.path.dirname(__file__), "static")
-        self.db = redis.Redis(host='redis',port=6379,db=0)
 	)
 	http_server = tornado.httpserver.HTTPServer(app)
 	http_server.listen(options.port)
