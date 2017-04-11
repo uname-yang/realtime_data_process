@@ -4,7 +4,7 @@ import os
 from kafka import KafkaConsumer, KafkaProducer
 
 # Kafka Configurations
-KAFKA_ENV_KAFKA_HOST_NAME = os.environ.get('KAFKA_HOST_NAME')
+KAFKA_HOST_NAME = os.environ.get('KAFKA_HOST_NAME')
 KAFKA_TOPIC_NAME = os.environ.get('KAFKA_TOPIC_NAME')
 
 
