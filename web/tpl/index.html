@@ -1,17 +1,8 @@
 {% extends "main.html" %} {% block body %}
 <div class="row">
-	<div class="span4">
-		<h2>Python</h2>
-		<p><a class="btn" href="#">{{python}}</a></p>
-	</div>
-	<div class="span4">
-		<h2>Haskell</h2>
-		<p><a class="btn" href="#">{{haskell}}</a></p>
-	</div>
-	<div class="span4">
-		<h2>Ruby</h2>
-		<p><a class="btn" href="#">{{ruby}}</a></p>
-	</div>
+	{% for lang in langs %}
+	{{ modules.Lang(lang) }}
+  {% end %}
 </div>
 
 {% end %}

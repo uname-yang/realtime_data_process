@@ -18,7 +18,14 @@ db = redis.Redis(host='redis',port=6379,db=0)
 
 class Index(tornado.web.RequestHandler):
     def get(self):
-        self.render('index.html',python=db.get('python'),ruby=db.get('ruby'),haskell=db.get('haskell'))
+        self.render('index.html',
+        langs=[{
+        "name":"python",
+        "count":db.get('python')
+        },{
+        "name":"ruby",
+        "count":db.get('ruby')
+        }])
 
 class Status(tornado.web.RequestHandler):
     def get(self,tag):
