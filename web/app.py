@@ -27,6 +27,13 @@ class Index(tornado.web.RequestHandler):
         "count":db.get('ruby')
         }])
 
+class BookModule(tornado.web.UIModule):
+	def render(self, book):
+		return self.render_string(
+			"modules/lang.html",
+			lang=lang,
+		)
+
 class Status(tornado.web.RequestHandler):
     def get(self,tag):
         count=db.get(tag)
