@@ -22,10 +22,10 @@ CONSUMER_KEY = os.environ.get('CONSUMER_KEY')
 CONSUMER_SECRET = os.environ.get('CONSUMER_SECRET')
 
 # Kafka Configurations
-KAFKA_ENV_KAFKA_HOST_NAME = 'kafka'
+KAFKA_ENV_KAFKA_HOST_NAME = os.environ.get('KAFKA_HOST_NAME')
 KAFKA_TOPIC_NAME = os.environ.get('KAFKA_TOPIC_NAME')
 
-producer = KafkaProducer(bootstrap_servers=[KAFKA_ENV_KAFKA_HOST_NAME+":9092"])
+producer = KafkaProducer(bootstrap_servers=[KAFKA_ENV_KAFKA_HOST_NAME])
 
 #This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
