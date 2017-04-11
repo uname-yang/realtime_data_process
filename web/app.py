@@ -27,13 +27,6 @@ class Index(tornado.web.RequestHandler):
         "count":db.get('ruby')
         }])
 
-class LangModule(tornado.web.UIModule):
-	def render(self, lang):
-		return self.render_string(
-			"modules/lang.html",
-			lang=lang,
-		)
-
 class Status(tornado.web.RequestHandler):
     def get(self,tag):
         count=db.get(tag)
@@ -50,7 +43,6 @@ if __name__ == '__main__':
 		handlers=[(r'/', Index),(r'/tweets', Mess),(r'/status/(.*)',Status)],
 		template_path=os.path.join(os.path.dirname(__file__), "tpl"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
-        ui_modules={"Lang": LangModule}
 	)
 	http_server = tornado.httpserver.HTTPServer(app)
 	http_server.listen(options.port)
