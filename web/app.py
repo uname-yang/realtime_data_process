@@ -21,20 +21,19 @@ class Index(tornado.web.RequestHandler):
 		self.render('index.html')
 
 class Status(tornado.web.RequestHandler):
-    def get(self):
-        count=db.get("python")
+    def get(self,tag):
+        count=db.get(tag)
         print "OK:"+count
 
 class Mess(tornado.web.RequestHandler):
 	def post(self):
 		tar = self.get_argument('url')
-        producer.send('my-topic',tar)
         self.write(json.dumps(status_success))
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
 	app = tornado.web.Application(
-		handlers=[(r'/', Index),(r'/tweets/(.*)', Mess),(r'/status/(.*)',Status)],
+		handlers=[(r'/', Index),(r'/tweets', Mess),(r'/status/(.*)',Status)],
 		template_path=os.path.join(os.path.dirname(__file__), "tpl"),
         static_path=os.path.join(os.path.dirname(__file__), "static")
 	)
