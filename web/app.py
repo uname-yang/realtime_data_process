@@ -42,9 +42,9 @@ class Status(tornado.web.RequestHandler):
         self.write(json.dumps(count))
 
 class Tweets(tornado.web.RequestHandler):
-    def get(self):
-        lookback =  request.args.get('lookback', 10)
-        self.write(json.dumps(lookback))
+    def post(self):
+        lang =  request.args.get('lang', 'python')
+        self.write(json.dumps(db.get('tw:'+lang)))
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()

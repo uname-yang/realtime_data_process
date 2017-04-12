@@ -21,6 +21,7 @@ class Consumer(threading.Thread):
             tweets=json.loads(message.value)
             for tag in tweets['entities']['hashtags']:
                 print (tag['text'].lower())
+                db.set('tw:'+tag['text'].lower(),tweets['text'])
                 db.incr(tag['text'].lower())
 
 def main():

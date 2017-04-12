@@ -3,19 +3,37 @@
 	{% for lang in langs %}
 	<div class="span4">
 		<h2>{{ lang["name"] }}</h2>
-		<p><a class="btn" href="#">{{ lang["count"] }}</a></p>
+		<p><a class="btn" onclick="tww({{ lang[" name "] }})">{{ lang["count"] }}</a></p>
 	</div>
 	{% end %}
 </div>
 
 <div class="media">
-  <a class="pull-left" href="#">
-    <img class="media-object" data-src="holder.js/64x64">
-  </a>
-  <div class="media-body">
-    <h4 class="media-heading">Media heading</h4>
-      <p> media-body</p>
-  </div>
+	<a class="pull-left" href="#">
+		<img class="media-object" data-src="holder.js/64x64">
+	</a>
+	<div class="media-body" id="msg">
+	</div>
 </div>
+
+<script type="text/javascript">
+	function tww(lang) {
+		$.ajax({
+			type: "POST",
+			cache: "false",
+			url: "/tweets",
+			data: {
+				lang: lang
+			},
+			datatype: "json",
+			error: function() {
+				$("#msg").html("<strong>ERROR</strong>");
+			},
+			success: function(message) {
+				$("#msg").html("<strong>TEXT:</strong>" + message);
+			}
+		});
+	}
+</script>
 
 {% end %}
