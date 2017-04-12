@@ -16,11 +16,11 @@ kafka:
   links:
     - zookeeper
 
-cassandra:
-  image: cassandra:latest
-  hostname: cassandra
-  ports:
-    - "9042:9042"
+# cassandra:
+#   image: cassandra:latest
+#   hostname: cassandra
+#   ports:
+#     - "9042:9042"
 
 redis:
   image: redis:latest
@@ -38,7 +38,7 @@ tweets:
     CONSUMER_KEY: "PRUgkvxvKCAvfT6cnoG8ZueMg"
     CONSUMER_SECRET: "WwtS8oKDT3H7dqQxNdQ7idUk5gMYX1ZeWXDA199QOHKLWIQhoQ"
     KAFKA_TOPIC_NAME: "tweets"
-    KEYWORDS_LIST: "python,perl,scala,ruby,javascript"
+    KEYWORDS_LIST: "python,perl,scala,ruby,javascript,nodejs"
     KAFKA_HOST_NAME: "kafka:9092"
   links:
     - kafka
@@ -53,34 +53,33 @@ worker:
     - kafka
     - redis
 
-connect:
-  image: datamountaineer/kafka-connect-cassandra
-  restart: always
-  environment:
-    KAFKA_TOPIC_NAME: "tweets"
-    CONNECTOR_CONNECTOR_CLASS: "com.datamountaineer.streamreactor.connect.cassandra.sink.CassandraSinkConnector"
-    CONNECTOR_NAME: "cassandra-sink-orders"
-    CONNECTOR_TASKS_MAX: "1"
-    CONNECT_BOOTSTRAP_SERVERS: "kafka:9092"
-    CONNECT_GROUP_ID: "connect"
-    CONNECT_CONFIG_STORAGE_TOPIC: "config"
-    CONNECTOR_TOPICS: "tweets"
-    CONNECTOR_CONNECT_CASSANDRA_SINK_KCQL: "INSERT INTO orders SELECT * FROM tweets"
-    CONNECTOR_CONNECT_CASSANDRA_CONTACT_POINTS: "cassandra"
-    CONNECTOR_CONNECT_CASSANDRA_PORT: "9042"
-    CONNECTOR_CONNECT_CASSANDRA_KEY_SPACE: "demo"
-  links:
-    - kafka
-    - cassandra
+# connect:
+#   image: datamountaineer/kafka-connect-cassandra
+#   restart: always
+#   environment:
+#     KAFKA_TOPIC_NAME: "tweets"
+#     CONNECTOR_CONNECTOR_CLASS: "com.datamountaineer.streamreactor.connect.cassandra.sink.CassandraSinkConnector"
+#     CONNECTOR_NAME: "cassandra-sink-orders"
+#     CONNECTOR_TASKS_MAX: "1"
+#     CONNECT_BOOTSTRAP_SERVERS: "kafka:9092"
+#     CONNECT_GROUP_ID: "connect"
+#     CONNECT_CONFIG_STORAGE_TOPIC: "config"
+#     CONNECTOR_TOPICS: "tweets"
+#     CONNECTOR_CONNECT_CASSANDRA_SINK_KCQL: "INSERT INTO tweets SELECT * FROM tweets"
+#     CONNECTOR_CONNECT_CASSANDRA_CONTACT_POINTS: "cassandra"
+#     CONNECTOR_CONNECT_CASSANDRA_PORT: "9042"
+#     CONNECTOR_CONNECT_CASSANDRA_KEY_SPACE: "twitter"
+#   links:
+#     - kafka
+#     - cassandra
 
 web:
   build: web
   restart: always
   hostname: web
   environment:
-    KEYWORDS_LIST: "python,perl,scala,ruby,javascript"
+    KEYWORDS_LIST: "python,perl,scala,ruby,javascript,nodejs"
   links:
     - redis
-    - cassandra
   ports:
     - "80:5000"
