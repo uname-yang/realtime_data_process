@@ -8,15 +8,22 @@
 	{% end %}
 </div>
 
-
-<div class="row">
-	{% for tw in tweets %}
-	<img class="span4" src={{ tw[ "user"] }} class="img-circle">
-	<div class="span8">
-		{{ tw["tw"] }}
-	</div>
-	{% end %}
-</div>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>user</th>
+			<th>tweets</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for tw in tweets %}
+		<tr>
+			<td><img src={{ tw[ "user"] }} class="img-circle"></td>
+			<td>{{ tw["tw"] }}</td>
+		</tr>
+		{% end %}
+	</tbody>
+</table>
 
 
 {% end %}

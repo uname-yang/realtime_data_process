@@ -13,47 +13,23 @@ define("port", default=5000, help="run on the given port", type=int)
 
 db = redis.Redis(host='redis',port=6379,db=0)
 
+KEYWORDS_LIST=os.environ.get('KEYWORDS_LIST', '').split(',')
+
 class Index(tornado.web.RequestHandler):
     def get(self):
+        langs=[]
+        tweets=[]
+        for key in KEYWORDS_LIST:
+            langs+={
+            "name":key,
+            "count":db.get(key)
+            tweets+={
+            "user":db.get('tw:'+key+':img'),
+            "tw":db.get('tw:'+key)
+            }
         self.render('index.html',
-        langs=[{
-        "name":"python",
-        "count":db.get('python')
-        },{
-        "name":"ruby",
-        "count":db.get('ruby')
-        },{
-        "name":"javascript",
-        "count":db.get('javascript')
-        },{
-        "name":"c#",
-        "count":db.get('c#')
-        },{
-        "name":"perl",
-        "count":db.get('perl')
-        },{
-        "name":"nodejs",
-        "count":db.get('nodejs')
-        }],
-        tweets=[{
-        "user":db.get('tw:python:img'),
-        "tw":db.get('tw:python')
-        },{
-        "user":db.get('tw:ruby:img'),
-        "tw":db.get('tw:ruby')
-        },{
-        "user":db.get('tw:javascript:img'),
-        "tw":db.get('tw:javascript')
-        },{
-        "user":db.get('tw:scala:img'),
-        "tw":db.get('tw:scala')
-        },{
-        "user":db.get('tw:c#:img'),
-        "tw":db.get('tw:c#')
-        },{
-        "user":db.get('tw:nodejs:img'),
-        "tw":db.get('tw:nodejs')
-        }])
+        langs=langs,
+        tweets=tweets)
 
 class Status(tornado.web.RequestHandler):
     def get(self,tag):
