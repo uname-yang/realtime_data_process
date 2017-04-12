@@ -22,6 +22,7 @@ class Consumer(threading.Thread):
             for tag in tweets['entities']['hashtags']:
                 print (tag['text'].lower())
                 db.set('tw:'+tag['text'].lower(),tweets['text'])
+                db.set('tw:'+tag['text'].lower()+":img",tweets['user']['profile_image_url'])
                 db.incr(tag['text'].lower())
 
 def main():
