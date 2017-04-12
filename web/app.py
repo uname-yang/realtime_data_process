@@ -13,9 +13,8 @@ define("port", default=5000, help="run on the given port", type=int)
 
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
-CASSANDRA_PORT_9042_TCP_ADDR = os.environ.get('CASSANDRA_PORT_9042_TCP_ADDR')
 
-cluster = Cluster([CASSANDRA_PORT_9042_TCP_ADDR])
+cluster = Cluster([('cassandra',9042)])
 session = cluster.connect()
 
 db = redis.Redis(host='redis',port=6379,db=0)
