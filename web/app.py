@@ -23,6 +23,7 @@ class Index(tornado.web.RequestHandler):
             langs+={
             "name":key,
             "count":db.get(key)
+            }
             tweets+={
             "user":db.get('tw:'+key+':img'),
             "tw":db.get('tw:'+key)
