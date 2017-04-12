@@ -62,6 +62,7 @@ connect:
     CONNECTOR_NAME: "cassandra-sink-orders"
     CONNECTOR_TASKS_MAX: "1"
     CONNECT_BOOTSTRAP_SERVERS: "kafka:9092"
+    CONNECT_GROUP_ID: "connect"
     CONNECTOR_TOPICS: "tweets"
     CONNECTOR_CONNECT_CASSANDRA_SINK_KCQL: "INSERT INTO orders SELECT * FROM tweets"
     CONNECTOR_CONNECT_CASSANDRA_CONTACT_POINTS: "cassandra"
@@ -73,7 +74,7 @@ connect:
 
 web:
   build: web
-  # restart: always
+  restart: always
   hostname: web
   environment:
     KEYWORDS_LIST: "python,perl,scala,ruby,javascript"
