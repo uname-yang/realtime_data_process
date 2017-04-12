@@ -20,14 +20,14 @@ class Index(tornado.web.RequestHandler):
         langs=[]
         tweets=[]
         for key in KEYWORDS_LIST:
-            langs+={
+            langs.append({
             "name":key,
             "count":db.get(key)
-            }
-            tweets+={
+            })
+            tweets.append({
             "user":db.get('tw:'+key+':img'),
             "tw":db.get('tw:'+key)
-            }
+            })
         self.render('index.html',
         langs=langs,
         tweets=tweets)
