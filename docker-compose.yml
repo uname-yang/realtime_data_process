@@ -54,7 +54,7 @@ worker:
     - redis
 
 keeper:
-  image: datamountaineer\kafka-connect-cassandra
+  image: datamountaineer/kafka-connect-cassandra
   restart: always
   environment:
     KAFKA_TOPIC_NAME: "tweets"
