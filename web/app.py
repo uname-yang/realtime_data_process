@@ -14,7 +14,7 @@ define("port", default=5000, help="run on the given port", type=int)
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
 
-cluster = Cluster([('cassandra',9042)])
+cluster = Cluster(['cassandra'],port=9042)
 session = cluster.connect()
 
 db = redis.Redis(host='redis',port=6379,db=0)
