@@ -26,8 +26,8 @@ class Index(tornado.web.RequestHandler):
         "name":"javascript",
         "count":db.get('javascript')
         },{
-        "name":"c",
-        "count":db.get('c')
+        "name":"c#",
+        "count":db.get('c#')
         },{
         "name":"perl",
         "count":db.get('perl')
@@ -48,8 +48,8 @@ class Index(tornado.web.RequestHandler):
         "user":db.get('tw:scala:img'),
         "tw":db.get('tw:scala')
         },{
-        "user":db.get('tw:c:img'),
-        "tw":db.get('tw:c')
+        "user":db.get('tw:c#:img'),
+        "tw":db.get('tw:c#')
         },{
         "user":db.get('tw:nodejs:img'),
         "tw":db.get('tw:nodejs')

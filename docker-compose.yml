@@ -38,7 +38,7 @@ tweets:
     CONSUMER_KEY: "PRUgkvxvKCAvfT6cnoG8ZueMg"
     CONSUMER_SECRET: "WwtS8oKDT3H7dqQxNdQ7idUk5gMYX1ZeWXDA199QOHKLWIQhoQ"
     KAFKA_TOPIC_NAME: "tweets"
-    KEYWORDS_LIST: "python,c,scala,ruby,javascript,nodejs"
+    KEYWORDS_LIST: "python,c#,scala,ruby,javascript,nodejs"
     KAFKA_HOST_NAME: "kafka:9092"
   links:
     - kafka
